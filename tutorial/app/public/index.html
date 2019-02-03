@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-" <title>First app</title>
+  <!--template-->
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+  <!-- Bootstrap core CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Material Design Bootstrap -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.0/css/mdb.min.css" rel="stylesheet">
+  <!-- JQuery -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/js/bootstrap.min.js"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.0/js/mdb.min.js"></script>
+  <!--template-->
+
+  <!-- update the version number as needed -->
+  <script defer src="/__/firebase/5.8.1/firebase-app.js"></script>
+  <!-- include only the Firebase features as you need -->
+  <script defer src="/__/firebase/5.8.1/firebase-auth.js"></script>
+  <script defer src="/__/firebase/5.8.1/firebase-database.js"></script>
+  <script defer src="/__/firebase/5.8.1/firebase-messaging.js"></script>
+  <script defer src="/__/firebase/5.8.1/firebase-storage.js"></script>
+  <!-- initialize the SDK after all desired features are loaded -->
+  <script defer src="/__/firebase/init.js"></script>
+
+
+</head>
+
+<body>
+  <div>
+    <p>
+      <label> Sign in status: <span id="sign-in-status"></span></label>
+      <br />
+      <button disabled id="sign-in" name="signin"> Sign in </button>
+      <br />
+      <label> Account Details: <span id="account-details"></span></label>
+      <br />
+    </p>
+  </div>
+  <form class="border border-light p-5">
+
+    <p class="h4 mb-4 text-center">Sign in</p>
+
+    <input type="email" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="E-mail">
+
+    <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" placeholder="Password">
+
+    <div class="d-flex justify-content-between">
+      <div>
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="defaultLoginFormRemember">
+          <label class="custom-control-label" for="defaultLoginFormRemember">Remember me</label>
+        </div>
+      </div>
+      <div>
+        <a href="">Forgot password?</a>
+      </div>
+    </div>
+
+    <button class="btn btn-info btn-block my-4" type="submit">Sign in</button>
+
+    <div class="text-center">
+      <p>Not a member?
+        <a href="">Register</a>
+      </p>
+
+      <p>or sign in with:</p>
+      <a type="button" class="light-blue-text mx-2">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+      <a id="google-sign-in" type="button" class="light-blue-text mx-2">
+        <i class="fab fa-google"></i>
+      </a>
+      <a type="button" class="light-blue-text mx-2">
+        <i class="fab fa-twitter"></i>
+      </a>
+      <a type="button" class="light-blue-text mx-2">
+        <i class="fab fa-linkedin-in"></i>
+      </a>
+      <a type="button" class="light-blue-text mx-2">
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+  </form>
+  <img id="image1" src="data:image/png;base64,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" />
+
+  <script>
+    if (document.readyState === 'complete') {
+      console.log('document is already ready, just execute code here');
+      myInitCode();
+    } else {
+      document.addEventListener('DOMContentLoaded', function () {
+        console.log('1document was not ready, place code here');
+        myInitCode();
+      });
+    }
+
+    function myInitCode() {
+      try {
+        let app = firebase.app();
+        var storageRef = firebase.storage().ref();
+
+        firebase.auth().onAuthStateChanged(function (user) {
+          if (user) {
+            var isAnonymous = user.isAnonymous;
+            var uid = user.uid;
+            document.getElementById('sign-in-status').textContent = "Signed in";
+            document.getElementById('sign-in').textContent = "Sign out";
+            document.getElementById('account-details').textContent = JSON.stringify(user, undefined, 2);
+            console.log("The user", user);
+          } else {
+            document.getElementById('sign-in-status').textContent = "Signed out";
+            document.getElementById('sign-in').textContent = "Sign in";
+            document.getElementById('account-details').textContent = 'null';
+          }
+
+          document.getElementById('sign-in').removeAttribute('disabled');
+
+        });
+
+        document.getElementById('google-sign-in').addEventListener('click', toggleGSignIn, false)
+        document.getElementById('sign-in').addEventListener('click', toggleSignIn, false)
+
+        storageRef.child("car1.jpeg").getDownloadURL().then(function (url) {
+          var uri = url;
+          var img = document.getElementById("image1");
+          img.src = uri;
+        });
+
+      } catch (e) {
+        console.error(e);
+        document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
+      }
+    }
+
+    function toggleGSignIn() {
+      console.log("toggle sign in");
+      if (firebase.auth().currentUser) {
+        firebase.auth().signOut();
+      } else {
+        var provider = new firebase.auth.GoogleAuthProvider();
+        provider.addScope('https://www.googleapis.com/auth/contacts.readonly')
+        //https://www.googleapis.com/auth/userinfo.email
+        //https://www.googleapis.com/auth/user.emails.read
+        //https://www.googleapis.com/auth/user.phonenumbers.read
+
+        firebase.auth().useDeviceLanguage();
+firebase.auth().signInWithPopup(provider).then(function(result){
+  var token = result.credential.accessToken;
+  var user = result.user;
+
+  console.log('token', token, 'user',user);
+}).catch(function(error) {
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          // The email of the user's account used.
+          var email = error.email;
+          // The firebase.auth.AuthCredential type that was used.
+          var credential = error.credential;
+          // [START_EXCLUDE]
+          if (errorCode === 'auth/account-exists-with-different-credential') {
+            alert('You have already signed up with a different auth provider for that email.');
+            // If you are using multiple auth providers on your app you should handle linking
+            // the user's accounts here.
+          } else {
+            console.error(error);
+          }
+          // [END_EXCLUDE]
+        });
+
+        firebase.auth().signInAnonymously().catch(
+          function (error) {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+
+            if (errorCode === 'auth/operation-not-allowed') {
+              alert("you most enable anonymous sign in in the firebase console");
+            }
+            console.error(error);
+          }
+        );
+
+      }
+    }
+
+
+    function toggleSignIn() {
+      console.log("toggle sign in");
+      if (firebase.auth().currentUser) {
+        firebase.auth().signOut();
+      } else {
+        firebase.auth().signInAnonymously().catch(
+          function (error) {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+
+            if (errorCode === 'auth/operation-not-allowed') {
+              alert("you most enable anonymous sign in in the firebase console");
+            }
+            console.error(error);
+          }
+        );
+
+      }
+    }
+  </script>
+</body>
+
+</html>
